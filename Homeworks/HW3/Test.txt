@@ -1,0 +1,21 @@
+\begin{table}
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+
+Galaxy & Halo Mass $(10^{12}M_{\odot})$ & Disk Mass $(10^{12}M_{\odot})$ & Bulge Mass $(10^{12}M_{\odot})$ & Total Mass $(10^{12}M_{\odot})$ & $f_{bar}$ \\
+
+\hline
+MW & 1.975 & 0.075 & 0.01 & 2.06 & 0.041 \\
+
+\hline
+M31 & 1.921 & 0.12 & 0.019 & 2.06 & 0.067 \\
+
+\hline
+M33 & 0.187 & 0.009 & 0.0 & 0.196 & 0.046 \\
+
+\hline
+\end{tabular}
+
+\end{table}
+
