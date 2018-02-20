@@ -7,7 +7,7 @@
 # Program that will Calculate the Center of Mass Position and Velcoity
 
 
-# In[271]:
+# In[3]:
 
 
 """Import python Modules"""
@@ -19,7 +19,7 @@ from Readfile import Read
 
 
 
-# In[182]:
+# In[4]:
 
 
 # Define Class Function
@@ -71,8 +71,9 @@ class CenterOfMass:
         return XCOM,YCOM,ZCOM
     """Completed this section"""
         
-    def COM_P(self, delta):
-        # Function that in object and delta (small change) and 
+    def COM_P(self, delta, VolDec):
+        # Function that in object and delta (small change) and Volume Decrease
+        # Updated for homework 6, removed RMAX/2 and replace with RMAX/VolDec
         # Returns 3D position converted values
         
         # Compute Center of Mass (COM) of 3D vector space
@@ -100,7 +101,7 @@ class CenterOfMass:
             # Loop that runs over shrinking volumes in R direction to verify COM convergence.
             
             # Index for particles less than half RMAX
-            index = np.where(RREF_COM <= RMAX/2.)[0]
+            index = np.where(RREF_COM <= RMAX/VolDec)[0]
             
            
             # Compute Center of Mass (COM) of 3D vector space at index values
@@ -112,9 +113,9 @@ class CenterOfMass:
             #print (RCOM2)
             
             # Change Particle positions to COM rotating reference frame coordinates in new volume
-            XREF_COM2 = self.x[ugh] - XCOM2
-            YREF_COM2 = self.y[ugh] - YCOM2
-            ZREF_COM2 = self.z[ugh] - ZCOM2
+            XREF_COM2 = self.x[index] - XCOM2
+            YREF_COM2 = self.y[index] - YCOM2
+            ZREF_COM2 = self.z[index] - ZCOM2
             
             # Magnitude of position/velocity to COM rotating reference frame of new volume
             RREF_COM2 = np.sqrt(XREF_COM2*XREF_COM2 + YREF_COM2*YREF_COM2 + ZREF_COM2*ZREF_COM2)
@@ -164,70 +165,5 @@ class CenterOfMass:
     
 
 
-# In[279]:
 
 
-# Initial Class funcitons for each file of 3 Galaxies, MW, M31, M33
-MWCOM = CenterOfMass("MW_000",2)
-M33COM = CenterOfMass("M33_000",2)
-M31COM = CenterOfMass("M31_000",2)
-
-#Compute Center of Mass Position coordinates
-MWP = np.round(MWCOM.COM_P(10),2)
-M33P = np.round(M33COM.COM_P(10),2)
-M31P = np.round(M31COM.COM_P(10),2)
-
-#Compute Center of Mass Velocity Coordinates 
-MWV = np.round(MWCOM.COM_V(MWP[0], MWP[1], MWP[2]),2)
-M31V = np.round(M31COM.COM_V(M31P[0], M31P[1], M31P[2]),2)
-M33V = np.round(M33COM.COM_V(M33P[0], M33P[1], M33P[2]),2)
-
-
-
-"""Making Table of Results"""
-# Define array of zero values to star computed position and velocity values
-tab_results = np.zeros(0)
-
-# List to be iterated through to attach to tab_results
-Results = ['MW COM', MWP, MWV, 'M31 COM', M31P, M31V, 'M33 COM', M33P, M33V ]
-
-# Iterate through list and append values to tab_results
-for i in Results:
-    tab_results = np.append(tab_results, i)
-
-# Restructure array into 3 by 7
-tab_results = np.reshape(tab_results, (3,7))
-
-#Make and plot
-t = tbl.Table(tab_results, names = ['Galaxy', 'X-component (kpc)', 'Y-Component (kpc)', 'Z-Component (kpc)','VX-component (km/s)', 'VY-Component (km/s)', 'VZ-Component (km/s)'])
-t.show_in_notebook()
-
-
-
-# In[306]:
-
-
-"""Quesition 2"""
-print ("Question 3 Results")
-# Calculate the seperation between MW and  M31 position
-SepP = np.round(np.sqrt(np.sum((MWP - M31P)**2)),3)*u.kpc
-# Calculate the seperation between MW and  M31 velocity
-SepV = np.round(np.sqrt(np.sum((MWV - M31V)**2)),3)*u.km/u.s
-# Print results
-print ("The magnitude of current seperation of position between MW and M31 is: %s\nThe magnitude of current seperation of velocity between MW and M31 is: %s" % (SepP,SepV))
-
-
-"""Question 3"""
-# Calculate the seperation between M33 and  M31 position
-SepP = np.round(np.sqrt(np.sum((M33P - M31P)**2)),3)*u.kpc
-# Calculate the seperation between M33 and  M31 velocity
-SepV = np.round(np.sqrt(np.sum((M33V - M31V)**2)),3)*u.km/u.s
-# Print results
-print ("The magnitude of current seperation of position between M33 and M31 is: %s\nThe magnitude of current seperation of velocity between M33 and M31 is: %s" % (SepP,SepV))
-
-
-# Question 4
-# 
-# The iterative process it important be would like to examine how the center of mass of the two galaxies interact with one another.
-# 
-# 

@@ -22,6 +22,7 @@ def Read(filename):
     
     #Set path to find where data files are stored
     path = "C:\\Users\Tyler\Documents\ASTR 400B\ASTR400B_Baines\Data\\"+filename+".txt"
+
     #print (path) #uncomment for print check
    
     #open file
@@ -33,7 +34,9 @@ def Read(filename):
     # read and store time 
     line1 = file.readline()
     label, value = line1.split()
-    time = float(value)*10.0*u.Myr
+    
+    #Re moved (*10.0*u.Myr) from line below for homework 6
+    time = float(value)*u.Myr
     
     # read and store total number of particles
     line2 = file.readline()
